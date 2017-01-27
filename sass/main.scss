@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|VT323');
+
+body {
+  background: #eeeeff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+h1 {
+  font-size: 10rem;
+}
+h1,h2,h3,h4,h5 {
+  font-family: 'VT323', monospace;
+}
+
+/*
+ *TITLEBAR
+ */
+#titlebar {
+  margin: 20px 0;
+
+  img {
+    vertical-align: bottom;
+    max-height: 110px;
+    height: inherit;
+    display: inline-block;
+  }
+
+  h1 {
+    display: inline-block;
+    margin: 0 0 0 20px;
+  }
+}
+
+/*
+ *FORM AND PREVIEW
+ */
+#preview span {
+  text-decoration: underline;
+}
+
+/*
+ * GAME LIST
+ */
+.game-list {
+  margin: 20px 0;
+  border: 1px solid green;
+
+  .game {
+    padding: 5px 0;
+
+    &:nth-child(odd) {
+      background-color: #fff;
+    }
+    &:nth-child(even) {
+      background-color: #f5f5f5;
+    }
+  }
+}
