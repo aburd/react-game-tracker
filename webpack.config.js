@@ -15,6 +15,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
+  devtool: 'source-map',
   module: {
     loaders: [
       {

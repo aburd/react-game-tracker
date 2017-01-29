@@ -8,7 +8,10 @@ class Games extends Component {
   getGames() {
     return this.props.titles.map( (title) => {
       return (
-        <div className="row game" key={title['_id']}>
+        <div
+          className="row game {title.selected ? 'selected': ''}"
+          key={title['_id']}
+        >
           <div className="col-xs-9 col-md-5 left-text">
             <strong>{title.name}</strong><br />
             Genre: {title.genre.join(', ')} <br />

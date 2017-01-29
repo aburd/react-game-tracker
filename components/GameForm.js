@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import $ from 'jquery'
 
 class GameForm extends Component {
   constructor(props) {
@@ -7,8 +8,8 @@ class GameForm extends Component {
 
   componentWillMount() {
     this.state = {
-      userGame: {
-        title: "Super Smashing Brothers",
+      newGame: {
+        name: "Super Smashing Brothers",
         genre: 'Placeholder Action!',
         played: false,
         beaten: false
@@ -16,27 +17,51 @@ class GameForm extends Component {
     }
   }
 
+  createGame(e) {
+    e.preventDefault();
+
+    var game = {
+      name: $('#form-name').val(),
+      genre: $('#form-genre').val(),
+      played: $('#form-played').is(':checked'),
+      beaten: $('#form-beaten').is(':checked')
+    }
+
+    return $.ajax({
+      url: './api/games',
+      type: 'POST',
+      dataType: "json",
+      data: JSON.stringify(game),
+      contentType: 'application/json; charset=UTF-8',
+      error: function(e) { console.log('Error:', e) },
+    }).done((game, status) => {
+      console.log('Status', status)
+      console.log('Game:', game)
+    })
+
+  }
+
   onGameChangeHandler (ev) {
     const property = ev.target.id.replace('form-', '');
     switch(property) {
-      case('title'):
+      case('name'):
         this.setState({
-          userGame: Object.assign(this.state.userGame, {title: ev.target.value})
+          newGame: Object.assign(this.state.newGame, {name: ev.target.value})
         })
         break;
       case('genre'):
         this.setState({
-          userGame: Object.assign(this.state.userGame, {genre: ev.target.value})
+          newGame: Object.assign(this.state.newGame, {genre: ev.target.value})
         })
         break;
       case('played'):
         this.setState({
-          userGame: Object.assign(this.state.userGame, {played: !this.state.userGame.played})
+          newGame: Object.assign(this.state.newGame, {played: !this.state.newGame.played})
         })
         break;
       case('beaten'):
         this.setState({
-          userGame: Object.assign(this.state.userGame, {beaten: !this.state.userGame.beaten})
+          newGame: Object.assign(this.state.newGame, {beaten: !this.state.newGame.beaten})
         })
         break;
       default:
@@ -46,13 +71,15 @@ class GameForm extends Component {
 
   render() {
     const onGameChangeHandler = this.onGameChangeHandler.bind(this)
+    const createGame = this.createGame.bind(this)
+
     return (
       <div className="row">
         <div className="col-md-6">
           <form>
             <div className="form-group">
-              <label htmlFor="title">Title</label>
-              <input onChange={onGameChangeHandler} id="form-title" className="form-control" placeholder="Super Dude" />
+              <label htmlFor="name">Title</label>
+              <input onChange={onGameChangeHandler} id="form-name" className="form-control" placeholder="Super Dude" />
             </div>
             <div className="form-group">
               <label htmlFor="genre">Genre</label>
@@ -70,17 +97,17 @@ class GameForm extends Component {
                 Beaten?
               </label>
             </div>
-            <button type="submit" className="btn btn-primary">Add Game</button>
+            <button onClick={createGame} type="submit" className="btn btn-primary">Add Game</button>
           </form>
         </div>
 
         <div className="col-md-6">
           <div id="#preview">
             <p>
-              <span>Title:</span> <strong>{this.state.userGame.title}</strong><br />
-              <span>Genre:</span> {this.state.userGame.genre} <br />
-              <span>Played:</span> {this.state.userGame.played ? 'Yes' : 'No'}<br />
-              <span>Beaten:</span> {this.state.userGame.beaten ? 'Yes' : 'No'}
+              <span>Name:</span> <strong>{this.state.newGame.name}</strong><br />
+              <span>Genre:</span> {this.state.newGame.genre} <br />
+              <span>Played:</span> {this.state.newGame.played ? 'Yes' : 'No'}<br />
+              <span>Beaten:</span> {this.state.newGame.beaten ? 'Yes' : 'No'}
             </p>
           </div>
         </div>
