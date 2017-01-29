@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import $ from 'jquery'
+import { connect } from 'react-redux'
+import request from 'superagent'
+import actions from '../redux/actions'
 
 class GameForm extends Component {
   constructor(props) {
@@ -21,23 +23,22 @@ class GameForm extends Component {
     e.preventDefault();
 
     var game = {
-      name: $('#form-name').val(),
-      genre: $('#form-genre').val(),
-      played: $('#form-played').is(':checked'),
-      beaten: $('#form-beaten').is(':checked')
+      name: document.querySelector('#form-name').value,
+      genre: document.querySelector('#form-genre').value,
+      played: document.querySelector('#form-played').checked,
+      beaten: document.querySelector('#form-beaten').checked
     }
-
-    return $.ajax({
-      url: './api/games',
-      type: 'POST',
-      dataType: "json",
-      data: JSON.stringify(game),
-      contentType: 'application/json; charset=UTF-8',
-      error: function(e) { console.log('Error:', e) },
-    }).done((game, status) => {
-      console.log('Status', status)
-      console.log('Game:', game)
-    })
+    if(game.name != '' && game.genre != '') {
+      request.post('./api/games')
+        .set('Content-Type', 'application/json')
+        .send(JSON.stringify(game))
+        .end(function(err, res) {
+          if(err) { console.log(err) }
+          this.props.dispatch(actions.addGame(res.body))
+        }.bind(this))
+    } else {
+      alert('Name and Genre must not be blank')
+    }
 
   }
 
@@ -116,4 +117,10 @@ class GameForm extends Component {
   }
 }
 
-export default GameForm
+function mapPropsToState(state) {
+  return {
+    games: state.games
+  }
+}
+
+export default connect(mapPropsToState)(GameForm)
