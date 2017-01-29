@@ -22,6 +22,10 @@ function reducer(state = {}, action) {
           return game
         })
       })
+    case constants.RESET_NEW_GAME:
+      return Object.assign({}, state, {
+        newGame: action.newGame
+      })
     case constants.GET_GAMES_FROM_SERVER:
       return Object.assign({}, state, {
         games: action.games

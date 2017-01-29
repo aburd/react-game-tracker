@@ -3,6 +3,7 @@ export const constants = {
   REMOVE_GAME: 'REMOVE_GAME',
   EDIT_GAME: 'EDIT_GAME',
   GET_GAME: 'GET_GAME',
+  RESET_NEW_GAME: 'RESET_NEW_GAME',
   GET_GAMES_FROM_SERVER: 'GET_GAMES_FROM_SERVER',
 }
 
@@ -23,6 +24,17 @@ export default {
     return {
       type: constants.EDIT_GAME,
       game: game
+    }
+  },
+  resetNewGame() {
+    return {
+      type: constants.RESET_NEW_GAME,
+      newGame: {
+        name: '',
+        genre: '',
+        beaten: false,
+        played: false
+      }
     }
   },
   getGame(_id) {

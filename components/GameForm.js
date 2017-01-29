@@ -8,16 +8,6 @@ class GameForm extends Component {
     super(props)
   }
 
-  componentWillMount() {
-    this.state = {
-      newGame: {
-        name: "Super Smashing Brothers",
-        genre: 'Placeholder Action!',
-        played: false,
-        beaten: false
-      }
-    }
-  }
 
   createGame(e) {
     e.preventDefault();
@@ -35,6 +25,7 @@ class GameForm extends Component {
         .end(function(err, res) {
           if(err) { console.log(err) }
           this.props.dispatch(actions.addGame(res.body))
+          this.props.dispatch(actions.resetNewGame())
         }.bind(this))
     } else {
       alert('Name and Genre must not be blank')
@@ -47,22 +38,22 @@ class GameForm extends Component {
     switch(property) {
       case('name'):
         this.setState({
-          newGame: Object.assign(this.state.newGame, {name: ev.target.value})
+          newGame: Object.assign(this.props.newGame, {name: ev.target.value})
         })
         break;
       case('genre'):
         this.setState({
-          newGame: Object.assign(this.state.newGame, {genre: ev.target.value})
+          newGame: Object.assign(this.props.newGame, {genre: ev.target.value})
         })
         break;
       case('played'):
         this.setState({
-          newGame: Object.assign(this.state.newGame, {played: !this.state.newGame.played})
+          newGame: Object.assign(this.props.newGame, {played: !this.props.newGame.played})
         })
         break;
       case('beaten'):
         this.setState({
-          newGame: Object.assign(this.state.newGame, {beaten: !this.state.newGame.beaten})
+          newGame: Object.assign(this.props.newGame, {beaten: !this.props.newGame.beaten})
         })
         break;
       default:
@@ -80,21 +71,21 @@ class GameForm extends Component {
           <form>
             <div className="form-group">
               <label htmlFor="name">Title</label>
-              <input onChange={onGameChangeHandler} id="form-name" className="form-control" placeholder="Super Dude" />
+              <input value={this.props.newGame.name} onChange={onGameChangeHandler} id="form-name" className="form-control" placeholder="Super Dude" />
             </div>
             <div className="form-group">
               <label htmlFor="genre">Genre</label>
-              <input onChange={onGameChangeHandler} id="form-genre" className="form-control" type="text" placeholder="Sleeping Simulation" />
+              <input value={this.props.newGame.genre} onChange={onGameChangeHandler} id="form-genre" className="form-control" type="text" placeholder="Sleeping Simulation" />
             </div>
             <div className="form-check">
               <label className="form-check-label">
-                <input onChange={onGameChangeHandler} id="form-played" type="checkbox" className="form-check-played" />
+                <input value={this.props.newGame.played} onChange={onGameChangeHandler} id="form-played" type="checkbox" className="form-check-played" />
                 Played?
               </label>
             </div>
             <div className="form-check">
               <label className="form-check-label">
-                <input onChange={onGameChangeHandler} id="form-beaten" type="checkbox" className="form-check-beaten"/>
+                <input value={this.props.newGame.beaten} onChange={onGameChangeHandler} id="form-beaten" type="checkbox" className="form-check-beaten"/>
                 Beaten?
               </label>
             </div>
@@ -105,10 +96,10 @@ class GameForm extends Component {
         <div className="col-md-6">
           <div id="#preview">
             <p>
-              <span>Name:</span> <strong>{this.state.newGame.name}</strong><br />
-              <span>Genre:</span> {this.state.newGame.genre} <br />
-              <span>Played:</span> {this.state.newGame.played ? 'Yes' : 'No'}<br />
-              <span>Beaten:</span> {this.state.newGame.beaten ? 'Yes' : 'No'}
+              <span>Name:</span> <strong>{this.props.newGame.name}</strong><br />
+              <span>Genre:</span> {this.props.newGame.genre} <br />
+              <span>Played:</span> {this.props.newGame.played ? 'Yes' : 'No'}<br />
+              <span>Beaten:</span> {this.props.newGame.beaten ? 'Yes' : 'No'}
             </p>
           </div>
         </div>
@@ -119,7 +110,7 @@ class GameForm extends Component {
 
 function mapPropsToState(state) {
   return {
-    games: state.games
+    newGame: state.newGame
   }
 }
 

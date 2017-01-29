@@ -12,7 +12,13 @@ let initialState = {
     played: true,
     beaten: true,
     date: Date.now()
-  }]
+  }],
+  newGame: {
+    name: "",
+    genre: '',
+    played: false,
+    beaten: false
+  }
 }
 
 let store = configureStore(initialState)
