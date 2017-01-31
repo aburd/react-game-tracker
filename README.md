@@ -1,3 +1,3 @@
-# react-todo-list
+# Game Tracker
 
-This is a simple todo list app built with React, Redux and Webpack. I built this app during my [tutorial series on YouTube](https://www.youtube.com/playlist?list=PLQDnxXqV213JJFtDaG0aE9vqvp6Wm7nBg).
+A game tracker made in React-redux. What have a beat? What haven't I beat? What do I need to get off my ass and finally play? Which dragons need slaying? Which games are fine left not revisited. Let this app help you my child.
