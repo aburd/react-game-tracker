@@ -1,9 +1,27 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|VT323');
+@import url('https://fonts.googleapis.com/css?family=Raleway|VT323');
+
+$color-primary: #212121;
+$color-blue-background: #00CCC9;
+$color-blue-font: #000;
+$color-red-background: #FF01C1;
+$color-red-font: #000;
+$color-yellow-background: #FFD501;
+$color-yellow-font: #000;
+$color-stress: #000;
+$color-link: #FF01C1;
+$color-background: #f5f5f5;
 
 body {
-  background: #eeeeff;
-  font-family: 'Open Sans', sans-serif;
+  background: $color-background;
+  color: $color-primary;
+  font-family: 'Raleway', sans-serif;
   font-size: 16px;
+}
+a {
+  color: $color-link;
+}
+strong, b {
+  color: $color-stress;
 }
 h1 {
   font-size: 10rem;
@@ -41,6 +59,9 @@ h1,h2,h3,h4,h5 {
 /*
  * GAME LIST
  */
+ #games {
+   margin: 20px 0;
+ }
 .game-list {
   margin: 20px 0;
   border: 1px solid green;
@@ -48,11 +69,28 @@ h1,h2,h3,h4,h5 {
   .game {
     padding: 5px 0;
 
-    &:nth-child(odd) {
-      background-color: #fff;
+    &.one {
+      background-color: rgba($color-blue-background, 0.15);
+      color: $color-blue-font;
+      &:hover, &.selected {
+        background-color: $color-blue-background;
+      }
     }
-    &:nth-child(even) {
-      background-color: #f5f5f5;
+    &.two {
+      background-color: rgba($color-red-background, 0.15);
+      color: $color-red-font;
+      &:hover, &.selected  {
+        background-color: $color-red-background;
+        color: #fff;
+        strong { color: #fff; }
+      }
+    }
+    &.three {
+      background-color: rgba($color-yellow-background, 0.15);
+      color: $color-yellow-font;
+      &:hover, &.selected {
+        background-color: $color-yellow-background;
+      }
     }
   }
 }

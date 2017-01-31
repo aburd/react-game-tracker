@@ -11,13 +11,28 @@ let initialState = {
     genre: ["Genre"],
     played: true,
     beaten: true,
-    date: Date.now()
+    date: Date.now(),
+    visible: true
   }],
   newGame: {
     name: "",
     genre: '',
     played: false,
     beaten: false
+  },
+  currentGame: {
+    name: "",
+    genre: '',
+    played: false,
+    beaten: false,
+    date: Date.now,
+    selected: true,
+    visible: true
+  },
+  user: {
+    username: 'Aaron',
+    gamesBeaten: 0,
+    gamesUnbeaten: 0
   }
 }
 
