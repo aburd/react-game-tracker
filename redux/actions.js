@@ -5,6 +5,7 @@ export const constants = {
   GET_GAME: 'GET_GAME',
   RESET_NEW_GAME: 'RESET_NEW_GAME',
   GET_GAMES_FROM_SERVER: 'GET_GAMES_FROM_SERVER',
+  TOGGLE_GAME_INFORMATION: 'TOGGLE_GAME_INFORMATION',
   SHOW_ALL_GAMES: 'SHOW_ALL_GAMES',
   TOGGLE_BEATEN: 'TOGGLE_BEATEN',
   TOGGLE_SELECTED: 'TOGGLE_SELECTED',
@@ -50,6 +51,12 @@ export default {
     return {
       type: constants.GET_GAMES_FROM_SERVER,
       games: games,
+    }
+  },
+  toggleGameInformation(_id) {
+    return {
+      type: constants.TOGGLE_GAME_INFORMATION,
+      id: _id
     }
   },
   showAllGames() {

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import actions from '../redux/actions'
 import { connect } from 'react-redux'
 import request from 'superagent'
+import User from './User'
 
 class Games extends Component {
   constructor(props) {
@@ -23,13 +24,17 @@ class Games extends Component {
     this.props.dispatch(actions.toggleBeaten(beaten))
   }
 
+  toggleGameInformation(_id) {
+    this.props.dispatch(actions.toggleGameInformation(_id))
+  }
+
   getGames() {
     return this.props.titles.map( (title, i) => {
       const color = (i%3==0) ? "one" : (i%3==2) ? "two" : "three"
       const selected = title.selected ? 'selected': '';
-      const listStyle = {
-        display: title.visible ? 'block' : 'none'
-      }
+      const listStyle = { display: title.visible ? 'block' : 'none' }
+      const infoStyle = { display: title.infoVisible ? 'block' : 'none' }
+      const toggleInformation = this.toggleGameInformation.bind(this, title._id)
       return (
         <div
           onClick={this.handleToggle}
@@ -40,12 +45,14 @@ class Games extends Component {
         >
           <div className="col-xs-9 col-md-6 left-text">
             <strong>{title.name}</strong><br />
-            Genre: {title.genre.join(', ')} <br />
-            - I have {title.played ? 'played dis ish.': 'not played dis ish.'} <br />
-          - I have {title.beaten ? 'beaten dis.' : 'not beaten dis.'}
+            <div className="info" style={infoStyle}>
+              Genre: {title.genre.join(', ')} <br />
+              - I have {title.played ? 'played dis ish.': 'not played dis ish.'} <br />
+              - I have {title.beaten ? 'beaten dis.' : 'not beaten dis.'}
+            </div>
           </div>
           <div className="col-xs-3 col-md-6 text-right right-controls">
-            <button className="btn btn-info"><i className="glyphicon glyphicon-eye-open"></i></button>
+            <button onClick={toggleInformation} className="btn btn-info"><i className="glyphicon glyphicon-eye-open"></i></button>
             <button className="btn btn-danger"><i className="glyphicon glyphicon-remove"></i></button>
           </div>
         </div>
@@ -58,18 +65,9 @@ class Games extends Component {
       <div id="games">
         <div className="row">
           <div className="col-sm-6">
-            <div className="col-xs-6">
-              <strong>User: </strong> <br />
-              <strong>Total Games: </strong> <br />
-              <strong>Games Unbeaten: </strong>
-            </div>
-            <div className="col-xs-6">
-              {this.props.user.name} <br />
-              {this.props.user.gamesBeaten} <br />
-              {this.props.user.gamesUnbeaten}
-            </div>
+            <User />
           </div>
-          <div className="col-sm-6 text-right">
+          <div className="col-sm-6 text-right" style={{'paddingRight': '0'}}>
             <button onClick={this.showAllGames} className="btn">All</button>
             <button onClick={this.toggleBeaten.bind(this, true)} className="btn">See Beaten</button>
             <button onClick={this.toggleBeaten.bind(this, false)} className="btn">Not Beaten</button>

@@ -26,6 +26,7 @@ class App extends Component {
         const modifiedGames = res.body.map( game => {
           game.selected = false
           game.visible = true
+          game.infoVisible = false
           return game
         })
         this.props.dispatch(actions.getGamesFromServer(modifiedGames))

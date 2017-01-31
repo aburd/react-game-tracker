@@ -35,6 +35,15 @@ function reducer(state = {}, action) {
       return Object.assign({}, state, {
         games: action.games
       })
+    case constants.TOGGLE_GAME_INFORMATION:
+      return Object.assign({}, state, {
+        games: state.games.map( game => {
+          if(game._id === action.id){
+            game.infoVisible = !game.infoVisible
+          }
+          return game
+        })
+      })
     case constants.SHOW_ALL_GAMES:
       return Object.assign({}, state, {
         games: state.games.map( game => {
@@ -45,23 +54,21 @@ function reducer(state = {}, action) {
     case constants.TOGGLE_BEATEN:
       return Object.assign({}, state, {
         games: state.games.map( game => {
-          if(game.beaten === action.beaten) {
+          if(game.beaten === action.beaten)
             game.visible = true
-          } else {
+          else
             game.visible = false
-          }
+
           return game
         })
       })
     case constants.TOGGLE_SELECTED:
       var newGames = state.games.map((game) => {
-          if(game._id === action.id){
+          if(game._id === action.id)
             game.selected = true
-            return game
-          } else {
+          else
             game.selected = false
-            return game
-          }
+          return game
         })
       return Object.assign({}, state, {
         games: newGames,

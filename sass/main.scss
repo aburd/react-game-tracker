@@ -61,6 +61,11 @@ h1,h2,h3,h4,h5 {
  */
  #games {
    margin: 20px 0;
+
+   button {
+     margin: 10px 5px;
+     cursor: pointer;
+   }
  }
 .game-list {
   margin: 20px 0;
@@ -68,6 +73,10 @@ h1,h2,h3,h4,h5 {
 
   .game {
     padding: 5px 0;
+
+    strong {
+      font-size: 2rem;
+    }
 
     &.one {
       background-color: rgba($color-blue-background, 0.15);

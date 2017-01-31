@@ -12,7 +12,8 @@ let initialState = {
     played: true,
     beaten: true,
     date: Date.now(),
-    visible: true
+    visible: true,
+    infoVisible: true,
   }],
   newGame: {
     name: "",
@@ -30,7 +31,7 @@ let initialState = {
     visible: true
   },
   user: {
-    username: 'Aaron',
+    name: 'Aaron',
     gamesBeaten: 0,
     gamesUnbeaten: 0
   }
