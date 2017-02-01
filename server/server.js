@@ -36,6 +36,7 @@ app.use(express.static('./dist'));
 app.get('/', function (req, res) {
     res.sendFile(path.resolve('client/index.html'));
 });
+
 // parse any incoming requests with bodyparser
 app.use(bodyParser.json());
 app.use('/api', gameController);

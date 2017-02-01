@@ -11,7 +11,9 @@ function reducer(state = {}, action) {
       })
     case constants.REMOVE_GAME:
       return Object.assign({}, state, {
-        games: state.games.filter( game => game._id === action._id )
+        games: state.games.filter( game => {
+          return game._id !== action.id
+        })
       })
     case constants.EDIT_GAME:
       return Object.assign({}, state, {

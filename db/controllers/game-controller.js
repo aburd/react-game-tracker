@@ -1,10 +1,15 @@
 const Game = require('../Schema/Game');
 const mongoose = require('mongoose');
+const mongo = require('mongodb');
+const ObjectId = mongo.ObjectId;
 const _ = require('underscore');
+const bodyParser = require('body-parser')
 
 const router = require('express').Router();
 
-router.route('/games:id?').get(getGames).post(addGame).delete(deleteGame);
+router.route('/games:id?')
+  .get(getGames)
+  .post(addGame);
 
 function getGames( req, res ) {
   Game.find({})
@@ -22,8 +27,6 @@ function getGames( req, res ) {
 }
 
 function addGame( req, res ) {
-  console.log(req);
-  console.log(req.body);
   let game = new Game(_.extend({}, req.body));
   game.save(function(err, game) {
     if(err)
@@ -33,35 +36,17 @@ function addGame( req, res ) {
   });
 }
 
-function deleteGame( req, res ) {
-  let id = req.params.id;
+router.post('/games/delete', function( req, res ) {
+  var id = req.body.id;
   Game.remove({ _id: id }, function(err, removed) {
-    if(err)
+    if(err){
       res.send(err);
+    }
     else {
-      res.json(removed);
+      console.log(id, 'removed.');
+      res.json(removed)
     }
   });
-}
-
-router.get('/getBeaten', function(req, res) {
-  Game.findBeaten(true, function(err, games) {
-    if(err) {
-      res.send(err);
-    } else {
-      res.json(games);
-    }
-  })
-});
-
-router.get('/getNotBeaten', function(req, res) {
-  Game.findBeaten(false, function(err, games) {
-    if(err) {
-      res.send(err);
-    } else {
-      res.json(games);
-    }
-  })
-});
+})
 
 module.exports = router;

@@ -21,7 +21,7 @@ export default {
   removeGame(_id) {
     return {
       type: constants.REMOVE_GAME,
-      game: _id
+      id: _id
     }
   },
   editGame(game) {

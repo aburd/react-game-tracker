@@ -7,6 +7,7 @@ import User from './User'
 class Games extends Component {
   constructor(props) {
     super(props)
+
     this.showAllGames = this.showAllGames.bind(this)
     this.handleToggle = this.handleToggle.bind(this)
     this.toggleBeaten = this.toggleBeaten.bind(this)
@@ -28,6 +29,24 @@ class Games extends Component {
     this.props.dispatch(actions.toggleGameInformation(_id))
   }
 
+  removeGame(_id) {
+    request
+      .post('./api/games/delete')
+      .set('Content-Type', 'application/json')
+      .send(JSON.stringify({id: _id}))
+      .end(function(err, res) {
+        if(err) { console.log(err) }
+
+        let response = JSON.parse(res.text)
+        if(response.n > 0)
+          console.log(response.n.toString() + ' document(s) deleted.')
+        else
+          console.log('Document ID not found.')
+
+        this.props.dispatch(actions.removeGame(_id))
+      }.bind(this))
+  }
+
   getGames() {
     return this.props.titles.map( (title, i) => {
       const color = (i%3==0) ? "one" : (i%3==2) ? "two" : "three"
@@ -35,6 +54,7 @@ class Games extends Component {
       const listStyle = { display: title.visible ? 'block' : 'none' }
       const infoStyle = { display: title.infoVisible ? 'block' : 'none' }
       const toggleInformation = this.toggleGameInformation.bind(this, title._id)
+      const removeGame = this.removeGame.bind(this, title._id)
       return (
         <div
           onClick={this.handleToggle}
@@ -53,7 +73,7 @@ class Games extends Component {
           </div>
           <div className="col-xs-3 col-md-6 text-right right-controls">
             <button onClick={toggleInformation} className="btn btn-info"><i className="glyphicon glyphicon-eye-open"></i></button>
-            <button className="btn btn-danger"><i className="glyphicon glyphicon-remove"></i></button>
+            <button onClick={removeGame} className="btn btn-danger"><i className="glyphicon glyphicon-remove"></i></button>
           </div>
         </div>
       )
